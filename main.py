@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
     ds = Dataset(conf.TRAIN_PATH, conf.featureCols, conf.labelCol)
-    g = GradientDescent(0.1, ds, conf.MAX_ITERATIONS, conf.h)
+    g = GradientDescent(conf.alpha, ds, conf.MAX_ITERATIONS, conf.h)
     g.run()
     errors = g.errors
     plt.plot(errors)
