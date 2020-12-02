@@ -8,7 +8,7 @@ class Dataset:
         path is absolute
         path is a csv file
         '''
-        self.features = pd.read_csv(filepath_or_buffer=path, usecols=featureCols).to_numpy()
+        self.features = pd.read_csv(filepath_or_buffer=path, usecols=featureCols).to_numpy(dtype='float64')
         self.labels = pd.read_csv(filepath_or_buffer=path, usecols=labelCol).to_numpy()
         self.labels = self.labels.flatten()
         self.n = self.features.shape[1] + 1 # Number of features with bias included
@@ -25,6 +25,10 @@ class Dataset:
         return [self.features[i], self.labels[i]]
 
     def preProcess(self):
-        for i in range(self.n):
-            pass
+        for i in range(self.n - 1):
+            sum = np.sum(self.features, 0)[i]
+            mean = sum/self.m
+            r = np.amax(self.features, 0)[i] - np.amin(self.features, 0)[i]
+            self.features[:,i] -= mean
+            self.features[:,i] /= r
         self.features = np.insert(self.features, 0, 1, 1) # Adding bias
