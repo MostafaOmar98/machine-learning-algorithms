@@ -3,7 +3,7 @@ import numpy as np
 
 
 class Dataset:
-    def __init__(self, path, featureCols, labelCol):
+    def __init__(self, path, featureCols, labelCol, doPre=True):
         '''
         path is absolute
         path is a csv file
@@ -14,7 +14,8 @@ class Dataset:
         self.n = self.features.shape[1] + 1 # Number of features with bias included
         self.m = self.features.size
 
-        self.preProcess()
+        if doPre:
+            self.preProcess()
 
     def __getitem__(self, i):
         '''
@@ -26,14 +27,11 @@ class Dataset:
 
     def preProcess(self):
         for i in range(self.n - 1):
-            sum = np.sum(self.features, 0)[i]
-            mean = sum/self.m
             r = np.amax(self.features, 0)[i] - np.amin(self.features, 0)[i]
-            self.features[:,i] -= mean
+            self.features[:,i] -= np.amin(self.features, 0)[i]
             self.features[:,i] /= r
         self.features = np.insert(self.features, 0, 1, 1) # Adding bias
 
-        mean = np.sum(self.labels)/self.m
         r = np.amax(self.labels) - np.amin(self.labels)
-        self.labels -= mean
+        self.labels -= np.amin(self.labels)
         self.labels /= r
