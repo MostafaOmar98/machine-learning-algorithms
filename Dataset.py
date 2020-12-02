@@ -9,7 +9,7 @@ class Dataset:
         path is a csv file
         '''
         self.features = pd.read_csv(filepath_or_buffer=path, usecols=featureCols).to_numpy(dtype='float64')
-        self.labels = pd.read_csv(filepath_or_buffer=path, usecols=labelCol).to_numpy()
+        self.labels = pd.read_csv(filepath_or_buffer=path, usecols=labelCol).to_numpy(dtype='float64')
         self.labels = self.labels.flatten()
         self.n = self.features.shape[1] + 1 # Number of features with bias included
         self.m = self.features.size
@@ -32,3 +32,8 @@ class Dataset:
             self.features[:,i] -= mean
             self.features[:,i] /= r
         self.features = np.insert(self.features, 0, 1, 1) # Adding bias
+
+        mean = np.sum(self.labels)/self.m
+        r = np.amax(self.labels) - np.amin(self.labels)
+        self.labels -= mean
+        self.labels /= r
