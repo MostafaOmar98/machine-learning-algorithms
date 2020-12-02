@@ -9,7 +9,8 @@ class Dataset:
         path is a csv file
         '''
         self.features = pd.read_csv(filepath_or_buffer=path, usecols=featureCols).to_numpy()
-        self.labels = pd.read_csv(filepath_or_buffer=path, usecols=labelCol).values.tolist()
+        self.labels = pd.read_csv(filepath_or_buffer=path, usecols=labelCol).to_numpy()
+        self.labels = self.labels.flatten()
         self.n = self.features.shape[1] + 1 # Number of features with bias included
         self.m = self.features.size
 
