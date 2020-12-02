@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-from pip._internal.utils.compat import lru_cache
 
 
 class Dataset:
@@ -16,7 +15,6 @@ class Dataset:
 
         self.preProcess()
 
-    # @lru_cache(maxsize=None)
     def __getitem__(self, i):
         '''
         returns list [x, y]

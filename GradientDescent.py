@@ -14,11 +14,11 @@ class GradientDescent:
         self.errors = []
 
     def run(self):
-        print(self.cost())
+        self.errors.append(self.cost())
         for i in range (self.MAX_ITERATIONS):
             self.updateParameters()
             self.errors.append(self.cost())
-            print('Iteration ' + str(i) + ' ' + str(self.errors[-1]))
+            print('Iteration ' + str(i + 1) + ' ' + str(self.errors[-1]))
 
     def updateParameters(self):
         newC = np.zeros(self.n)
