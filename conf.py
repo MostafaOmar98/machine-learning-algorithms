@@ -1,8 +1,9 @@
 TRAIN_PATH='/home/bekh/mnt/HDD/FCI/Level 4 - Sem1/Machine Learning/ass2/house_data.csv'
+# featureCols=['sqft_living', 'grade', 'lat', 'view']
 featureCols=['sqft_living']
 labelCol=['price']
-alpha=0.01
-MAX_ITERATIONS = 1000
+alpha=0.1
+MAX_ITERATIONS = 100
 
 import numpy as np
 
