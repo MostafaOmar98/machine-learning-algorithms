@@ -9,6 +9,7 @@ class Dataset:
         '''
         self.features = pd.read_csv(filepath_or_buffer=path, usecols=featureCols)
         self.n = len(self.features.columns) + 1 # Number of features with bias included
+        self.m = self.features.size
         self.labels = pd.read_csv(filepath_or_buffer=path, usecols=labelCol)
 
     def __getitem__(self, i):

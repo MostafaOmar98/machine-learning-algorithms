@@ -6,6 +6,7 @@ class GradientDescent:
         self.alpha = alpha # Learning Rate
         self.ds = ds # Dataset
         self.n = ds.n # Number of features WITH bias included
+        self.m = ds.m # Number of examples
         self.MAX_ITERATIONS = MAX_ITERATIONS
         self.h = h # hypothesis function
 
@@ -15,15 +16,17 @@ class GradientDescent:
     def run(self):
         for i in range (self.MAX_ITERATIONS):
             self.updateParameters()
-            self.errors.append(self.getError())
+            self.errors.append(self.cost(1))
 
     def updateParameters(self):
         newC = np.zeros(self.n)
-
         for j in range (self.n):
-            for [x, y] in self.ds:
-                pass
+                newC[j] = self.c[j] - self.alpha * self.cost(x[j])
+        c = newC
 
-
-    def getError(self):
-        pass
+    def cost(self, factor):
+        ret = 0
+        for [x, y] in self.ds:
+           ret += factor * (y - self.h(self.c, x))**2
+        ret /= 1/(2 * self.m)
+        return ret
