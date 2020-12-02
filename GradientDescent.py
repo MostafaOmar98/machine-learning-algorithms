@@ -22,7 +22,7 @@ class GradientDescent:
         newC = np.zeros(self.n)
         for j in range (self.n):
                 newC[j] = self.c[j] - self.alpha * self.cost(x[j])
-        c = newC
+        self.c = newC
 
     def cost(self, factor):
         ret = 0
