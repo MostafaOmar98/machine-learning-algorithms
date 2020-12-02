@@ -15,8 +15,8 @@ class Dataset:
     def __getitem__(self, i):
         '''
         returns list [x, y]
-        x is features of example i with bias included
-        y is the label of example i
+        x is nparray, features of example i with bias included
+        y is float value, the label of example i
         '''
         x = self.features.iloc[i].to_numpy()
         x = np.insert(x, 0, 1) # insert bias in front

@@ -1,6 +1,7 @@
 TRAIN_PATH='/home/bekh/mnt/HDD/FCI/Level 4 - Sem1/Machine Learning/ass2/house_data.csv'
 featureCols=['sqft_living']
 labelCol=['price']
+MAX_ITERATIONS = 1000
 
 import numpy as np
 
@@ -11,4 +12,4 @@ def h(x, c):
     :param c: numpy array representing weights
     :return: float value representing the prediction
     '''
-    return np.transpose(c).dot(x)[0]
+    return c.dot(x)
