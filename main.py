@@ -1,6 +1,5 @@
 from Dataset import Dataset
 import conf
-import numpy as np
 from GradientDescent import GradientDescent
 
 if __name__ == "__main__":

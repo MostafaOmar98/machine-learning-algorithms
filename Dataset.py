@@ -19,6 +19,6 @@ class Dataset:
         y is the label of example i
         '''
         x = self.features.iloc[i].to_numpy()
-        np.insert(x, 0, 1) # insert bias in front
-        y = self.labels.iloc[i]
+        x = np.insert(x, 0, 1) # insert bias in front
+        y = self.labels.iloc[i].to_list()[0]
         return [x, y]
