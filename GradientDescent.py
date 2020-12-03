@@ -29,13 +29,13 @@ class GradientDescent:
     def deriv(self, factorIndex=0):
         ret = 0
         for [x, y] in self.ds:
-            ret += x[factorIndex] * (y - self.h(self.c, x))
+            ret += x[factorIndex] * (self.h(self.c, x) - y)
         ret /= self.m
         return ret
 
     def cost(self):
         ret = 0
         for [x, y] in self.ds:
-            ret += (y - self.h(self.c, x))**2
+            ret += (self.h(self.c, x) - y)**2
         ret /= (2 * self.m)
         return ret
