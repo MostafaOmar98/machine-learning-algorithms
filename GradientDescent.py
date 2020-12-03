@@ -23,12 +23,19 @@ class GradientDescent:
     def updateParameters(self):
         newC = np.zeros(self.n)
         for j in range (self.n):
-                newC[j] = self.c[j] - self.alpha * self.cost(j)
+                newC[j] = self.c[j] - self.alpha * self.deriv(j)
         self.c = newC
 
-    def cost(self, factorIndex=0):
+    def deriv(self, factorIndex=0):
         ret = 0
         for [x, y] in self.ds:
-            ret += x[factorIndex] * ((y - self.h(self.c, x))**2)
+            ret += x[factorIndex] * (y - self.h(self.c, x))
+        ret /= self.m
+        return ret
+
+    def cost(self):
+        ret = 0
+        for [x, y] in self.ds:
+            ret += (y - self.h(self.c, x))**2
         ret /= (2 * self.m)
         return ret
