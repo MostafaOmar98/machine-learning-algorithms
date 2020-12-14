@@ -1,4 +1,4 @@
-TRAIN_PATH='/home/bekh/mnt/HDD/FCI/Level 4 - Sem1/Machine Learning/ass2/house_data.csv'
+TRAIN_PATH= 'assets/house_data.csv'  # relative path to the project directory /assets directory has the datasets
 # featureCols=['sqft_living', 'grade', 'lat', 'view']
 featureCols=['sqft_living']
 labelCol=['price']
