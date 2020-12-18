@@ -15,3 +15,10 @@ def h(x, c):
     :return: float value representing the prediction
     '''
     return c.dot(x)
+def cost(ds,h,c,m):
+        ret = 0
+        # looping on examples only, no need to loop on features because dot product
+        for [x, y] in ds:
+            ret += (h(c, x) - y)**2
+        ret /= (2 * m)
+        return ret
