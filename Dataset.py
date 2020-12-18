@@ -12,7 +12,7 @@ class Dataset:
         self.labels = pd.read_csv(filepath_or_buffer=path, usecols=labelCol).to_numpy(dtype='float64')
         self.labels = self.labels.flatten()
         self.n = self.features.shape[1] + 1 # Number of features with bias included
-        self.m = self.features.size
+        self.m =self.features.shape[0]
 
         if doPre:
             self.preProcess()
