@@ -3,7 +3,7 @@ TRAIN_PATH = 'assets/house_data.csv'  # relative path to the project directory /
 featureCols = ['sqft_living']
 labelCol = ['price']
 alpha = 0.1
-MAX_ITERATIONS = 5
+MAX_ITERATIONS = 100
 TRAIN_SIZE = 0.8
 TEST_SIZE = 1 - TRAIN_SIZE
 

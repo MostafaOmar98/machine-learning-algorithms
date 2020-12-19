@@ -17,9 +17,11 @@ if __name__ == "__main__":
     plt.xlabel('Iterations')
     plt.ylabel('Error')
     plt.show()
-    # todo update the plotting axis based on which algorithm
-    dsPlot = Dataset(conf.TRAIN_PATH, conf.featureCols, conf.labelCol, False, False, conf.TEST_SIZE)
-    plt.scatter([x[0] for [x, y] in dsPlot], [y for [x, y] in dsPlot])
-    plt.xlabel("Square Foot Living")
-    plt.ylabel("Price")
-    plt.show()
+
+    dsTest = Dataset(conf.TRAIN_PATH, conf.featureCols, conf.labelCol, True, True, conf.TEST_SIZE)
+    print("Error on test data: " + str(conf.cost(dsTest, conf.h, g.c, dsTest.m)))
+    if (ds.n == 2):
+        plt.plot([x[1] for [x, y] in ds], [y for [x, y] in ds], 'og', [0, 1], [conf.h([1, 0], g.c), conf.h([1, 1], g.c)], 'k')
+        plt.xlabel("Square Foot Living")
+        plt.ylabel("Price")
+        plt.show()
