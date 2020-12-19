@@ -11,8 +11,12 @@ class Dataset:
         self.features = pd.read_csv(filepath_or_buffer=path, usecols=featureCols).to_numpy(dtype='float64')
         self.labels = pd.read_csv(filepath_or_buffer=path, usecols=labelCol).to_numpy(dtype='float64')
         self.labels = self.labels.flatten()
-        self.n = self.features.shape[1] + 1  # Number of features with bias included
+        self.addBias()
+        self.n = self.features.shape[1]  # Number of features with bias included
         self.m = self.features.shape[0]
+
+        self.normFeatures = None
+        self.normLabels = None
 
         if doPre:
             self.preProcess()
@@ -35,12 +39,27 @@ class Dataset:
         return [self.features[i], self.labels[i]]
 
     def preProcess(self):
-        for i in range(self.n - 1):
-            r = np.amax(self.features, 0)[i] - np.amin(self.features, 0)[i]
-            self.features[:, i] -= np.amin(self.features, 0)[i]
-            self.features[:, i] /= r
-        self.features = np.insert(self.features, 0, 1, 1)  # Adding bias
+        self.normFeatures = []
+        self.normFeatures.append([0, 1]) # Normalization for bias
 
-        r = np.amax(self.labels) - np.amin(self.labels)
+        for i in range(1, self.n):
+            mx = np.amax(self.features, 0)[i]
+            mn = np.amin(self.features, 0)[i]
+            r = mx - mn
+
+            self.normFeatures.append([mn, r])
+
+            self.features[:, i] -= mn
+            self.features[:, i] /= r
+
+        mx = np.amax(self.labels)
+        mn = np.amin(self.labels)
+        r = mx - mn
+
+        self.normLabels = [mn, r]
+
         self.labels -= np.amin(self.labels)
         self.labels /= r
+
+    def addBias(self):
+        self.features = np.insert(self.features, 0, 1, 1)  # Adding bias
