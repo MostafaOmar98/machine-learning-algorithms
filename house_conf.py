@@ -1,11 +1,12 @@
-TRAIN_PATH= 'assets/house_data.csv'  # relative path to the project directory /assets directory has the datasets
+TRAIN_PATH = 'assets/house_data.csv'  # relative path to the project directory /assets directory has the datasets
 # featureCols=['sqft_living', 'grade', 'lat', 'view']
-featureCols=['sqft_living']
-labelCol=['price']
-alpha=0.1
+featureCols = ['sqft_living']
+labelCol = ['price']
+alpha = 0.1
 MAX_ITERATIONS = 100
 
 import numpy as np
+
 
 def h(x, c):
     '''
@@ -15,10 +16,20 @@ def h(x, c):
     :return: float value representing the prediction
     '''
     return c.dot(x)
-def cost(ds,h,c,m):
-        ret = 0
-        # looping on examples only, no need to loop on features because dot product
-        for [x, y] in ds:
-            ret += (h(c, x) - y)**2
-        ret /= (2 * m)
-        return ret
+
+
+def cost(ds, h, c, m):
+    '''
+
+    :param ds: dataset
+    :param h: hypothesis function
+    :param c: thetas
+    :param m: number of examples
+    :return:
+    '''
+    ret = 0
+    # looping on examples only, no need to loop on features because dot product
+    for [x, y] in ds:
+        ret += (h(c, x) - y) ** 2
+    ret /= (2 * m)
+    return ret
