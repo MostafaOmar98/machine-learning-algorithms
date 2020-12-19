@@ -29,10 +29,9 @@ class GradientDescent:
         self.c = newC
     # both logistic regression and linear regression have the same derivative with different hypothesis functoin
     def deriv(self, factorIndex=0):
-        # todo  shouldn't we increment the factorIndex ??? @Bekh
         ret = 0
         for [x, y] in self.ds:
-            ret -= x[factorIndex] * (self.h(self.c, x) - y)
+            ret -= x[factorIndex] * (self.h(self.c, x) - y) # - (h(c, x) - y)
         ret /= self.m
         return ret
 
