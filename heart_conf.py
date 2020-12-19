@@ -1,5 +1,5 @@
 import math
-import  conf
+import  house_conf
 import numpy as np
 TRAIN_PATH = './assets/heart.csv'
 TRAIN_SIZE = 0.8
@@ -15,7 +15,7 @@ def h(x,theta):
     :param theta: coefficient vector
     :return: value between 0-1
     """
-    return 1/(1+math.exp(-1*conf.h(x, theta)))
+    return 1/(1 + math.exp(-1 * house_conf.h(x, theta)))
 def cost(ds,h,c,m):
         ret = 0
         for [x,y] in ds:

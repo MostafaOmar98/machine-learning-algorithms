@@ -8,7 +8,7 @@ import numpy as np
 if __name__ == "__main__":
     ans = input("if you want to test <House price mode> press -H-\nelse if you want to test <Heart disease model> press -D-")
     if(ans == 'h'):
-        import  conf
+        import  house_conf
     else :
         import heart_conf as conf
     ds = Dataset(conf.TRAIN_PATH, conf.featureCols, conf.labelCol)
