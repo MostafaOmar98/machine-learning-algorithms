@@ -1,8 +1,6 @@
 from Dataset import Dataset
-# import conf
 from GradientDescent import GradientDescent
 import matplotlib.pyplot as plt
-import numpy as np
 
 
 if __name__ == "__main__":
