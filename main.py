@@ -9,7 +9,7 @@ if __name__ == "__main__":
         import house_conf as conf
     else:
         import heart_conf as conf
-    ds = Dataset(conf.TRAIN_PATH, conf.featureCols, conf.labelCol)
+    ds = Dataset(conf.TRAIN_PATH, conf.featureCols, conf.labelCol, True, True, conf.TRAIN_SIZE)
     g = GradientDescent(conf.alpha, ds, conf.MAX_ITERATIONS, conf.h, conf.cost)
     g.run()
     errors = g.errors
@@ -18,7 +18,7 @@ if __name__ == "__main__":
     plt.ylabel('Error')
     plt.show()
     # todo update the plotting axis based on which algorithm
-    dsPlot = Dataset(conf.TRAIN_PATH, conf.featureCols, conf.labelCol, False)
+    dsPlot = Dataset(conf.TRAIN_PATH, conf.featureCols, conf.labelCol, False, False, conf.TEST_SIZE)
     plt.scatter([x[0] for [x, y] in dsPlot], [y for [x, y] in dsPlot])
     plt.xlabel("Square Foot Living")
     plt.ylabel("Price")

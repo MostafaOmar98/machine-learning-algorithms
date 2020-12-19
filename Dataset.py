@@ -3,7 +3,7 @@ import numpy as np
 
 
 class Dataset:
-    def __init__(self, path, featureCols, labelCol, doPre=True):
+    def __init__(self, path, featureCols, labelCol, doPre, fromBegin, examplesPercentage):
         '''
         path is absolute
         path is a csv file
@@ -16,6 +16,15 @@ class Dataset:
 
         if doPre:
             self.preProcess()
+
+        if fromBegin == True:
+            self.features = self.features[:int(examplesPercentage * self.m)]
+            self.labels = self.labels[:int(examplesPercentage * self.m)]
+        else:
+            self.features = self.features[int((1-examplesPercentage)*self.m):]
+            self.labels = self.labels[int((1-examplesPercentage)*self.m):]
+
+        self.m = int(examplesPercentage * self.m)
 
     def __getitem__(self, i):
         '''
