@@ -5,7 +5,6 @@ labelCol = ['price']
 alpha = 0.1
 MAX_ITERATIONS = 100
 
-import numpy as np
 
 
 def h(x, c):
