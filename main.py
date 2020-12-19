@@ -6,7 +6,7 @@ import numpy as np
 
 
 if __name__ == "__main__":
-    ans = str(input("if you want to test <House price mode> enter H\nelse if you want to test <Heart disease model> enter D"))
+    ans = str(input("if you want to test <House price mode> enter H\nelse if you want to test <Heart disease model> enter D\n"))
     if(ans == 'H'):
         import house_conf as conf
     else :
