@@ -1,27 +1,47 @@
 from Dataset import Dataset
-# import conf
 from GradientDescent import GradientDescent
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 if __name__ == "__main__":
-    ans = input("if you want to test <House price mode> press -H-\nelse if you want to test <Heart disease model> press -D-")
-    if(ans == 'h'):
-        import  conf
-    else :
+    ans = str(input(
+        "if you want to test <House price mode> enter H\nelse if you want to test <Heart disease model> enter D\n"))
+    if (ans == 'H'):
+        import house_conf as conf
+    else:
         import heart_conf as conf
-    ds = Dataset(conf.TRAIN_PATH, conf.featureCols, conf.labelCol)
-    g = GradientDescent(conf.alpha, ds, conf.MAX_ITERATIONS, conf.h,conf.cost)
+    ds = Dataset(conf.TRAIN_PATH, conf.featureCols, conf.labelCol, True, True, conf.TRAIN_SIZE)
+    g = GradientDescent(conf.alpha, ds, conf.MAX_ITERATIONS, conf.h, conf.cost, conf.deriv)
     g.run()
     errors = g.errors
     plt.plot(errors)
     plt.xlabel('Iterations')
     plt.ylabel('Error')
     plt.show()
-    # todo update the plotting axis based on which algorithm
-    dsPlot = Dataset(conf.TRAIN_PATH, conf.featureCols, conf.labelCol, False)
-    plt.scatter([x[0] for [x, y] in dsPlot], [y for [x, y] in dsPlot])
-    plt.xlabel("Square Foot Living")
-    plt.ylabel("Price")
-    plt.show()
+
+    dsTest = Dataset(conf.TRAIN_PATH, conf.featureCols, conf.labelCol, True, True, conf.TEST_SIZE)
+    print("Error on test data: " + str(conf.cost(dsTest, conf.h, g.c, dsTest.m)))
+    if (ds.n == 2):
+        plt.plot([x[1] for [x, y] in ds], [y for [x, y] in ds], 'og', [0, 1], [conf.h([1, 0], g.c), conf.h([1, 1], g.c)], 'k')
+        plt.xlabel("Square Foot Living")
+        plt.ylabel("Price")
+        plt.show()
+
+    while (True):
+        ans = str(input("Do you want test one more example? [y/n]\n"))
+        if (ans == 'n'):
+            break
+        x = [1]
+        for f in conf.featureCols:
+            ans = float(input("Enter feature " + f + ": "))
+            x.append(ans)
+
+        x = np.array(x)
+        x = x - ds.normFeatures[:,0]
+        x /= ds.normFeatures[:, 1]
+
+        y = conf.h(x, g.c)
+        y *= ds.normLabels[1]
+        y += ds.normLabels[0]
+
+        print("Y = " + str(y))
