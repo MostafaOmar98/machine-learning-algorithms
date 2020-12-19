@@ -8,7 +8,7 @@ TEST_SIZE = 1 - TRAIN_SIZE
 featureCols = ['trestbps', 'chol', 'thalach', 'oldpeak']
 labelCol = ['target']
 alpha = 0.01
-MAX_ITERATIONS = 100
+MAX_ITERATIONS = 500
 
 
 def h(x, theta):
@@ -30,4 +30,10 @@ def cost(ds, h, c, m):
         else:
             ret += -1 * (1 - y) * (np.log(1 - h(x, c)))
     ret /= (2 * m)
+    return ret
+
+def deriv(ds, h, c, factorIndex):
+    ret = 0
+    for [x, y] in ds:
+        ret += x[factorIndex] * (h(c, x) - y)
     return ret

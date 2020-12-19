@@ -33,3 +33,10 @@ def cost(ds, h, c, m):
         ret += (h(c, x) - y) ** 2
     ret /= (2 * m)
     return ret
+
+def deriv(ds, h, c, factorIndex):
+    ret = 0
+    for [x, y] in ds:
+        ret += x[factorIndex] * (h(c, x) - y)
+    ret /= ds.m
+    return ret
