@@ -32,6 +32,6 @@ class GradientDescent:
     def deriv(self, factorIndex=0):
         ret = 0
         for [x, y] in self.ds:
-            ret += x[factorIndex] * (self.h(self.c, x) - y)  # - (h(c, x) - y)
+            ret += x[factorIndex] * (self.h(self.c, x) - y)
         ret /= self.m
         return ret
