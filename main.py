@@ -1,6 +1,7 @@
 from Dataset import Dataset
 from GradientDescent import GradientDescent
 import matplotlib.pyplot as plt
+import numpy as np
 
 if __name__ == "__main__":
     ans = str(input(
@@ -25,3 +26,22 @@ if __name__ == "__main__":
         plt.xlabel("Square Foot Living")
         plt.ylabel("Price")
         plt.show()
+
+    while (True):
+        ans = str(input("Do you want test one more example? [y/n]\n"))
+        if (ans == 'n'):
+            break
+        x = [1]
+        for f in conf.featureCols:
+            ans = float(input("Enter feature " + f + ": "))
+            x.append(ans)
+
+        x = np.array(x)
+        x = x - ds.normFeatures[:,0]
+        x /= ds.normFeatures[:, 1]
+
+        y = conf.h(x, g.c)
+        y *= ds.normLabels[1]
+        y += ds.normLabels[0]
+
+        print("Y = " + str(y))

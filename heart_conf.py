@@ -8,7 +8,7 @@ TEST_SIZE = 1 - TRAIN_SIZE
 featureCols = ['trestbps', 'chol', 'thalach', 'oldpeak']
 labelCol = ['target']
 alpha = 0.01
-MAX_ITERATIONS = 500
+MAX_ITERATIONS = 200
 
 
 def h(x, theta):

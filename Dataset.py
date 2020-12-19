@@ -20,6 +20,8 @@ class Dataset:
 
         if doPre:
             self.preProcess()
+            self.normFeatures = np.array(self.normFeatures)
+            self.normLabels = np.array(self.normLabels)
 
         if fromBegin == True:
             self.features = self.features[:int(examplesPercentage * self.m)]
