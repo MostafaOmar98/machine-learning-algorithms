@@ -19,7 +19,7 @@ if __name__ == "__main__":
     plt.ylabel('Error')
     plt.show()
 
-    dsTest = Dataset(conf.TRAIN_PATH, conf.featureCols, conf.labelCol, True, True, conf.TEST_SIZE)
+    dsTest = Dataset(conf.TRAIN_PATH, conf.featureCols, conf.labelCol, True, False, conf.TEST_SIZE)
     print("Error on test data: " + str(conf.cost(dsTest, conf.h, g.c, dsTest.m)))
     if (ds.n == 2):
         plt.plot([x[1] for [x, y] in ds], [y for [x, y] in ds], 'og', [0, 1], [conf.h([1, 0], g.c), conf.h([1, 1], g.c)], 'k')
