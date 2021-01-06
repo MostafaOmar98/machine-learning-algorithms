@@ -9,6 +9,7 @@ featureCols = ['trestbps', 'chol', 'thalach', 'oldpeak']
 labelCol = ['target']
 alpha = 0.01
 MAX_ITERATIONS = 500
+preProc = False
 
 
 def h(x, theta):
