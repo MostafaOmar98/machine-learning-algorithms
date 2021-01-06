@@ -2,7 +2,7 @@ import numpy as np
 
 
 class DataSet:
-    def __init__(self, features, labels, preprocess, bias=False):
+    def __init__(self, features: np.ndarray, labels: np.ndarray, preprocess: bool, bias=False):
         self.features = features
         self.labels = labels
         if bias:
@@ -19,7 +19,7 @@ class DataSet:
     def addBias(self):
         self.features = np.insert(self.features, 0, 1, 1)  # Adding bias
 
-    def __getitem__(self, i):
+    def __getitem__(self, i: int):
         '''
         returns list [x, y]
         x is nparray, features of example i with bias included
