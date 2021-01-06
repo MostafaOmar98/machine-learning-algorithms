@@ -2,6 +2,8 @@ from Dataset import Dataset
 from GradientDescent import GradientDescent
 import matplotlib.pyplot as plt
 import numpy as np
+from Data_Wrapper import Data
+from DataSet import DataSet
 
 if __name__ == "__main__":
     ans = str(input(
@@ -10,7 +12,9 @@ if __name__ == "__main__":
         import house_conf as conf
     else:
         import heart_conf as conf
-    ds = Dataset(conf.TRAIN_PATH, conf.featureCols, conf.labelCol, True, True, conf.TRAIN_SIZE)
+    data = Data(conf.TRAIN_PATH,conf.featureCols,conf.labelCol,0.8)
+    # ds = Dataset(conf.TRAIN_PATH, conf.featureCols, conf.labelCol, True, True, conf.TRAIN_SIZE)
+    ds = data.training
     g = GradientDescent(conf.alpha, ds, conf.MAX_ITERATIONS, conf.h, conf.cost, conf.deriv)
     g.run()
     errors = g.errors
@@ -18,8 +22,8 @@ if __name__ == "__main__":
     plt.xlabel('Iterations')
     plt.ylabel('Error')
     plt.show()
-
-    dsTest = Dataset(conf.TRAIN_PATH, conf.featureCols, conf.labelCol, True, False, conf.TEST_SIZE)
+    dsTest = data.testing
+    # dsTest = Dataset(conf.TRAIN_PATH, conf.featureCols, conf.labelCol, True, False, conf.TEST_SIZE)
     print("Error on test data: " + str(conf.cost(dsTest, conf.h, g.c, dsTest.m)))
     if (ds.n == 2):
         plt.plot([x[1] for [x, y] in ds], [y for [x, y] in ds], 'og', [0, 1], [conf.h([1, 0], g.c), conf.h([1, 1], g.c)], 'k')
