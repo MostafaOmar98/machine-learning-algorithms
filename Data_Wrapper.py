@@ -11,8 +11,10 @@ class Data:
         path is absolute
         path is a csv file
         '''
-        self.features = pd.read_csv(filepath_or_buffer=path, usecols=featureCols).to_numpy(dtype='float64')
-        self.labels = pd.read_csv(filepath_or_buffer=path, usecols=labelCol).to_numpy(dtype='float64')
+        self.data = pd.read_csv(filepath_or_buffer=path,usecols=featureCols+labelCol)
+        self.data.sample(frac=1)                                                # frac=1 is taking all the dataset
+        self.features = self.data[featureCols].to_numpy(dtype='float64')
+        self.labels = self.data[labelCol].to_numpy(dtype='float64')
         self.labels = self.labels.flatten()
         self.n = self.features.shape[1]  # Number of features with bias included
         self.m = self.features.shape[0]
