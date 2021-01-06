@@ -6,7 +6,8 @@ alpha = 0.1
 MAX_ITERATIONS = 100
 TRAIN_SIZE = 0.8
 TEST_SIZE = 1 - TRAIN_SIZE
-preProc = False
+preProc = True
+addbias = True
 
 
 def h(x, c):

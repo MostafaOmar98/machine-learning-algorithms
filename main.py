@@ -15,10 +15,10 @@ if __name__ == "__main__":
     else:
         import heart_conf as conf
 
-    data = Data(conf.TRAIN_PATH, conf.featureCols, conf.labelCol, conf.TRAIN_SIZE, conf.preProc)
+    data = Data(conf.TRAIN_PATH, conf.featureCols, conf.labelCol, conf.TRAIN_SIZE, conf.preProc, conf.addbias)
     # ds = Dataset(conf.TRAIN_PATH, conf.featureCols, conf.labelCol, True, True, conf.TRAIN_SIZE)
     ds = data.training
-    g = GradientDescent(conf.alpha, ds, conf.MAX_ITERATIONS, conf.h, conf.cost, conf.deriv)
+    g = GradientDescent(conf.alpha, ds, conf.MAX_ITERATIONS, conf.h, conf.cost, conf.deriv, conf.addbias)
     g.run()
     errors = g.errors
     plt.plot(errors)

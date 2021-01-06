@@ -10,5 +10,6 @@ for i in featureCols:
 labelCol = ["target"]
 print(featureCols)
 preProc = False
+addbias = False
 alpha = 0.01
 MAX_ITERATIONS = 500
