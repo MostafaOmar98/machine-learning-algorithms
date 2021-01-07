@@ -49,3 +49,8 @@ class DataSet:
         if (r > 0):
             self.labels -= np.amin(self.labels)
             self.labels /= r
+    def mergeFeatureAndLabel(self):
+        newLabel = np.reshape(self.labels, (self.labels.shape[0], 1))
+
+        wholeData = np.hstack((self.features, newLabel))
+        self.wholeData = wholeData
