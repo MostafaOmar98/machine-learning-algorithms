@@ -24,8 +24,18 @@ def filterOnFeature(wholeData: np.ndarray, feature: int):
 def run(dataset: DataSet):
     populate_absence(dataset.features)
     dataset.mergeFeatureAndLabel()
-    countVotes(dataset.wholeData)
+    gain = entropy(dataset.wholeData)
+    # countVotes(dataset.wholeData)
 
 def countVotes(wholeData: np.ndarray):
     unique, counts = np.unique(wholeData[:, -1], return_counts=True) # get votes from last column
     return dict(zip(unique, counts))
+
+def entropy(dataset :np.ndarray ):
+    votes = countVotes(dataset)
+    cnt = dataset.shape[0]
+    ret = 0
+    fun = lambda x : (-x/cnt)*np.log2(x/cnt)
+    for result in votes:
+        ret+=fun(votes[result])
+    return ret
