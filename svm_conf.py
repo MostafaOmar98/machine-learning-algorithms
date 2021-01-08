@@ -11,8 +11,8 @@ TRAIN_SIZE = 0.8
 TEST_SIZE = 1 - TRAIN_SIZE
 featureCols = ['age', 'sex', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 'thalach', 'exang', 'oldpeak', 'slope', 'ca','thal']
 labelCol = ['target']
-alpha = 0.0001
-MAX_ITERATIONS = 500
+alpha = 0.001
+MAX_ITERATIONS = 2000
 preProc = True
 addbias = True
 
@@ -42,7 +42,8 @@ def tInv(y):
 
 
 def cost(x, y, w):
-    return max(0, 1 - t(y) * h(x, w))
+    onlyWeight = w[1:]
+    return max(0, 1 - t(y) * h(x, w)) + np.linalg.norm(onlyWeight)/2
 
 
 def predict(x, w):

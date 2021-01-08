@@ -17,6 +17,7 @@ if __name__ == "__main__":
         plt.show()
         print("Train Acurracy = " + str(conf.get_accuracy(data.training, g.w)))
         print("Test Acurracy = " + str(conf.get_accuracy(data.testing, g.w)))
+        print("final training error = " + str(g.errors[-1]))
         print("Benchmark Without Kernel = " + str(conf.benchmark(data, False)))
         print("Benchmark With Kernel = " + str(conf.benchmark(data, True)))
         print()

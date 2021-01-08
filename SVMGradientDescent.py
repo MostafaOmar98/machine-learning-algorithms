@@ -25,5 +25,3 @@ class SVMGradientDescent:
     def updateParameters(self):
         for [x, y] in self.ds:
             self.w = self.w - self.alpha * self.deriv(x, y, self.w, self.lamda)
-
-
