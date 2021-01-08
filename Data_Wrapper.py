@@ -23,4 +23,5 @@ class Data:
         self.n = self.features.shape[1]  # Number of features with bias included
         self.m = self.features.shape[0]
         self.training = DataSet(self.features[:int(trainSize * self.m)], self.labels[:int(trainSize * self.m)], preProc,addbias)
-        self.testing = DataSet(self.features[int(trainSize * self.m):],self.labels[int(trainSize * self.m):], preProc, addbias)
+        self.testing = DataSet(self.features[int(trainSize * self.m):],self.labels[int(trainSize * self.m):], False, addbias)
+        self.testing.applyNormalization(self.training.normFeatures, self.training.normLabels)
