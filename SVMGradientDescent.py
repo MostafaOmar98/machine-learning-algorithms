@@ -16,10 +16,10 @@ class SVMGradientDescent:
         self.errors = []
 
     def run(self):
-        self.errors.append(self.cost(self.ds, self.w))
+        self.errors.append(self.cost(self.ds, self.w, self.lamda))
         for i in range(self.MAX_ITERATIONS):
             self.updateParameters()
-            self.errors.append(self.cost(self.ds, self.w))
+            self.errors.append(self.cost(self.ds, self.w, self.lamda))
             # print("Error on iteration " + str(i) + " = " + str(self.errors[-1]))
 
     def updateParameters(self):

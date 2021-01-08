@@ -1,18 +1,21 @@
 import numpy as np
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.svm import SVC
-from sklearn.metrics import accuracy_score, confusion_matrix
 
 import DataSet
 
 TRAIN_PATH = './assets/heart.csv'
 TRAIN_SIZE = 0.8
 TEST_SIZE = 1 - TRAIN_SIZE
-featureCols = ['age', 'sex', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 'thalach', 'exang', 'oldpeak', 'slope', 'ca','thal']
+# featureCols = ['age', 'sex', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 'thalach', 'exang', 'oldpeak', 'slope', 'ca','thal']
+featureCols = ['age', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 'thalach', 'exang', 'oldpeak', 'slope', 'ca','thal']
+# featureCols = ['age', 'cp', 'trestbps', 'chol',  'restecg', 'thalach', 'oldpeak', 'slope', 'ca','thal']
+# featureCols = ['age', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 'thalach', 'exang', 'oldpeak', 'slope', 'thal']
+# featureCols = ['age', 'oldpeak', 'slope', 'thal']
+# featureCols = ['trestbps', 'chol', 'thalach', 'oldpeak']
 labelCol = ['target']
-alpha = 0.001
-MAX_ITERATIONS = 2000
+# alpha = 0.001  #too slow
+# alpha = 0.1 # too much fluctuation
+alpha = 0.01 # good
+MAX_ITERATIONS = 500
 preProc = True
 addbias = True
 
@@ -41,21 +44,24 @@ def tInv(y):
     return 0
 
 
-def cost(x, y, w):
+def cost(x, y, w, lamda):
+    ret = 0
     onlyWeight = w[1:]
-    return max(0, 1 - t(y) * h(x, w)) + np.linalg.norm(onlyWeight)/2
+    ret = lamda * np.linalg.norm(onlyWeight)/2
+    ret += max(0, 1 - t(y) * h(x, w))
+    return ret
 
 
 def predict(x, w):
     return tInv(h(x, w))
 
 
-def isCorrect(x, y, w):
-    return predict(x, w) == y
+def isCorrectStrict(x, y, w):
+    return t(y) * h(x, w) >= 1
 
 
 def deriv(x, y, w, lamda):
-    if (isCorrect(x, y, w)):
+    if (isCorrectStrict(x, y, w)):
         return 2 * lamda * w
     return 2 * lamda * w - t(y) * x
 
@@ -63,28 +69,12 @@ def deriv(x, y, w, lamda):
 def get_accuracy(ds: DataSet, w):
     correct = 0
     for [x, y] in ds:
-        correct += isCorrect(x, y, w)
+        correct += predict(x, w) == y
     return correct / ds.m
 
-def totalCost(ds, w):
+def totalCost(ds, w, lamda):
     ret = 0
     for [x, y] in ds:
-        ret += cost(x, y, w)
+        ret += cost(x, y, w, lamda)
     ret /= ds.m
     return ret
-
-def benchmark(data, withKernel: bool):
-    # TODO: Remove this and remove includes for sklearn too
-    x_train = data.training.features
-    y_train = data.training.labels
-    x_test = data.testing.features
-    y_test = data.testing.labels
-
-    model = None
-    if (withKernel):
-        model = SVC(kernel='linear')
-    else:
-        model = SVC()
-    model.fit(x_train, y_train)
-    y_pred = model.predict(x_test)
-    return accuracy_score(y_pred, y_test)
