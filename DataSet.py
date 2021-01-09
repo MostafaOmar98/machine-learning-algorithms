@@ -45,6 +45,12 @@ class DataSet:
 
         self.normLabels = [mn, r]
 
+    def mergeFeatureAndLabel(self):
+        newLabel = np.reshape(self.labels, (self.labels.shape[0], 1))
+
+        wholeData = np.hstack((self.features, newLabel))
+        self.wholeData = wholeData
+
     def applyNormalization(self, F, L):
         for i in range(1, self.n):
             if (F[i][1] > 0):
