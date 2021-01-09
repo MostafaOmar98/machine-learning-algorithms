@@ -65,3 +65,25 @@ class DecisionTree:
     def countVotes(self, wholeData: np.ndarray):
         unique, counts = np.unique(wholeData[:, -1], return_counts=True)  # get votes from last column
         return dict(zip(unique, counts))
+
+    def testDataSet(self, testDataSet: np.ndarray):
+        if self.root is None:
+            print("model is not trained yet, please traing first")
+            return
+        cntRight = 0
+        total = testDataSet.shape[0]
+        for exampleIndex in range(total):
+            result = self.test(testDataSet[exampleIndex], self.root)
+            if result == testDataSet[exampleIndex][-1]:
+                cntRight += 1
+
+        return (1.0 * cntRight) / total
+
+    # it takes one examples and returns it's result
+    def test(self, example: np.ndarray, node: Node):
+        if node.result is None:
+            featureIndx = node.featureIndex
+            for child in node.children:
+                if child.featureName == example[featureIndx]:
+                    return self.test(example, child)
+        return node.result
