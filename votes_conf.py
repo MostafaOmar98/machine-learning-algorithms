@@ -1,7 +1,7 @@
 import numpy as np
 
 TRAIN_PATH = './assets/house-votes-84.data.csv'
-TRAIN_SIZE = 0.8
+TRAIN_SIZE = 0.5
 TEST_SIZE = 1 - TRAIN_SIZE
 featureCols = []
 for i in range(1, 17):
