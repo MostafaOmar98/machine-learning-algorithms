@@ -4,7 +4,7 @@ from typing import Callable
 import numpy as np
 
 from DataSet import DataSet
-from Node import Node
+from .Node import Node
 
 
 class DecisionTree:
@@ -16,24 +16,31 @@ class DecisionTree:
         self.dataset = dataset
         self.preProcess = preprocess
         self.runPre()
-        root = Node()
+        self.root = Node("root")
+        self.train(self.root, self.dataset.wholeData)
 
-    def train(self, dataset: np.ndarray, taken=[]):
+    def train(self, currentNode: Node, dataset: np.ndarray, taken=[]):
         # base case
         ent = self.entropy(dataset)
         if ent == 0:
+            currentNode.result = dataset[:, -1][0]  # we make the result the
             return
-        arr = dict()
-        mn = sys.maxint
-        mnindx = 0
-        for featureIndx in range(0, dataset.shape[1]):
-            if not (featureIndx in taken):
-                gain = ent - ((splitted.shape[0] / dataset.shape[0]) * self.entropy(splitted)
-                              for splitted in (self.filterOnFeature(dataset, featureIndx)))
-                if mn > gain:
-                    mn = gain
-                    mnindx = featureIndx
-        taken.append()
+        mx = 0
+        mxindx = 0
+        for featureIndx in range(0, dataset.shape[1] - 1):
+            if not featureIndx in taken:
+                gain = ent
+                for splitted in self.filterOnFeature(dataset, featureIndx):
+                    gain = gain - ((1.0 * splitted.shape[0] / dataset.shape[0]) * self.entropy(splitted))
+                if mx < gain:
+                    mx = gain
+                    mxindx = featureIndx
+        currentNode.featureIndex = mxindx
+        taken.append(mxindx)
+        for (ds) in self.filterOnFeature(wholeData=dataset, feature=mxindx):
+            if ds.shape[0] > 0:
+                currentNode.addToChildren(Node(featureName=ds[:, mxindx][0]))
+                self.train(currentNode.children[-1], ds, taken=taken)
 
     def runPre(self):
         self.preProcess(self.dataset.features)
@@ -41,6 +48,8 @@ class DecisionTree:
 
     def entropy(self, dataset: np.ndarray):
         votes = self.countVotes(dataset)
+        if len(votes) == 1:  # if we have pure set
+            return 0
         cnt = dataset.shape[0]
         ret = 0
         fun = lambda x: (-x / cnt) * np.log2(x / cnt)
@@ -56,11 +65,3 @@ class DecisionTree:
     def countVotes(self, wholeData: np.ndarray):
         unique, counts = np.unique(wholeData[:, -1], return_counts=True)  # get votes from last column
         return dict(zip(unique, counts))
-    def test(self,dataset: np.ndarray):
-        if self.root is None:
-            print("can't test before training")
-            return
-        else:
-            #todo
-            return
-            # todo
