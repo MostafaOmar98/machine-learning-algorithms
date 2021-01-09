@@ -1,4 +1,3 @@
-from Dataset import Dataset
 from GradientDescent import GradientDescent
 import matplotlib.pyplot as plt
 import numpy as np

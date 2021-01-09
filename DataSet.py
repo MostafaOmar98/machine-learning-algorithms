@@ -15,6 +15,7 @@ class DataSet:
             self.preProcess()
             self.normFeatures = np.array(self.normFeatures)
             self.normLabels = np.array(self.normLabels)
+            self.applyNormalization(self.normFeatures, self.normLabels)
 
     def addBias(self):
         self.features = np.insert(self.features, 0, 1, 1)  # Adding bias
@@ -37,20 +38,25 @@ class DataSet:
             r = mx - mn
 
             self.normFeatures.append([mn, r])
-            if (r > 0):
-                self.features[:, i] -= mn
-                self.features[:, i] /= r
 
         mx = np.amax(self.labels)
         mn = np.amin(self.labels)
         r = mx - mn
 
         self.normLabels = [mn, r]
-        if (r > 0):
-            self.labels -= np.amin(self.labels)
-            self.labels /= r
+
     def mergeFeatureAndLabel(self):
         newLabel = np.reshape(self.labels, (self.labels.shape[0], 1))
 
         wholeData = np.hstack((self.features, newLabel))
         self.wholeData = wholeData
+
+    def applyNormalization(self, F, L):
+        for i in range(1, self.n):
+            if (F[i][1] > 0):
+                self.features[:, i] -= F[i][0]
+                self.features[:, i] /= F[i][1]
+
+        if (L[1] > 0):
+            self.labels -= L[0]
+            self.labels /= L[1]
