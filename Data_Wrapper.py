@@ -20,9 +20,10 @@ class Data:
             self.features = self.data[featureCols].to_numpy()
             self.labels = self.data[labelCol].to_numpy()
         self.labels = self.labels.flatten()
-        self.n = self.features.shape[1] + 1 # Number of features with bias included
+        self.n = self.features.shape[1] + 1 if addbias else 0 # Number of features with bias included
         self.m = self.features.shape[0]
         self.training = DataSet(self.features[:int(trainSize * self.m)], self.labels[:int(trainSize * self.m)], preProc,addbias)
         self.testing = DataSet(self.features[int(trainSize * self.m):],self.labels[int(trainSize * self.m):], False, addbias)
-        if (preProc):
+        
+        if preProc:
             self.testing.applyNormalization(self.training.normFeatures, self.training.normLabels)

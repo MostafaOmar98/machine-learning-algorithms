@@ -60,3 +60,5 @@ class DataSet:
         if (L[1] > 0):
             self.labels -= L[0]
             self.labels /= L[1]
+    def __len__(self):
+        return self.m
