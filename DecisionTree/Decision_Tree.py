@@ -15,9 +15,9 @@ class DecisionTree:
         self.preProcess = preprocess
         self.runPre()
         self.root = Node("root")
-        self.train(self.root, self.dataset.wholeData)
+        self.train(self.root, self.dataset.wholeData, [])
 
-    def train(self, currentNode: Node, dataset: np.ndarray, taken=[]):
+    def train(self, currentNode: Node, dataset: np.ndarray, taken):
         # base case
         ent = self.entropy(dataset)
         if ent == 0:
@@ -30,7 +30,7 @@ class DecisionTree:
                 gain = ent
                 for splitted in self.filterOnFeature(dataset, featureIndx):
                     gain = gain - ((1.0 * splitted.shape[0] / dataset.shape[0]) * self.entropy(splitted))
-                if gain != 0 and mx < gain:
+                if mx < gain:
                     mx = gain
                     mxindx = featureIndx
         currentNode.featureIndex = mxindx
