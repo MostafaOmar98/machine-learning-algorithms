@@ -9,8 +9,7 @@ for i in range(1, 17):
 labelCol = ["target"]
 preProc = False
 addbias = False
-alpha = 0.01
-MAX_ITERATIONS = 500
+
 
 
 
