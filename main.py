@@ -6,7 +6,7 @@ from DataSet import DataSet
 
 if __name__ == "__main__":
     ans = str(input(
-        "if you want to test <House price mode> enter H\nelse if you want to test <Heart disease model> enter D\n"))
+        "if you want to test <House price mode> enter H\nelse if you want to test <Heart disease model> enter D\nelse if you want to test <Voters model> enter v\n"))
     if (ans == 'H'):
         import house_conf as conf
     elif ans == 'v':
