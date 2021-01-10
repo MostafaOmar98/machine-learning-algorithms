@@ -6,18 +6,16 @@ from DataSet import DataSet
 
 if __name__ == "__main__":
     ans = str(input(
-        "if you want to test <House price mode> enter H\nelse if you want to test <Heart disease model> enter D\nelse if you want to test <Voters model> enter v\n"))
+        "if you want to test <House price mode> enter H\nelse if you want to test <Heart disease model> enter D\n"))
     if (ans == 'H'):
         import house_conf as conf
-    elif ans == 'v':
-        import votes_conf as conf
     else:
         import heart_conf as conf
 
     data = Data(conf.TRAIN_PATH, conf.featureCols, conf.labelCol, conf.TRAIN_SIZE, conf.preProc, conf.addbias)
     # ds = Dataset(conf.TRAIN_PATH, conf.featureCols, conf.labelCol, True, True, conf.TRAIN_SIZE)
     ds = data.training
-    g = GradientDescent(conf.alpha, ds, conf.MAX_ITERATIONS, conf.h, conf.cost, conf.deriv, conf.addbias)
+    g = GradientDescent(conf.alpha, ds, conf.MAX_ITERATIONS, conf.h, conf.cost, conf.deriv)
     g.run()
     errors = g.errors
     plt.plot(errors)
