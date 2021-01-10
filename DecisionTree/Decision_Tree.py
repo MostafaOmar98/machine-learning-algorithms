@@ -9,7 +9,6 @@ from .Node import Node
 
 class DecisionTree:
 
-
     def __init__(self, dataset: DataSet, preprocess: Callable):
         self.dataset = dataset
         self.preProcess = preprocess
@@ -37,10 +36,10 @@ class DecisionTree:
                     mxindx = featureIndx
         if mxindx == -1:
             votes = self.countVotes(dataset)
-            mx =0
-            result =None
+            mx = 0
+            result = None
             for vote in votes:
-                if votes[vote]>mx:
+                if votes[vote] > mx:
                     mx = votes[vote]
                     result = vote
             currentNode.result = result
@@ -49,7 +48,7 @@ class DecisionTree:
         currentNode.featureIndex = mxindx
         taken.append(mxindx)
         for (ds) in self.filterOnFeature(wholeData=dataset, feature=mxindx):
-            if ds.shape[0] > 0:# todo check removal
+            if ds.shape[0] > 0:  # todo check removal
                 currentNode.addToChildren(Node(featureName=ds[:, mxindx][0]))
                 self.train(currentNode.children[-1], ds, taken=taken.copy())
 
@@ -100,3 +99,9 @@ class DecisionTree:
                 if child.featureName == example[featureIndx]:
                     return self.test(example, child)
         return node.result
+
+    def getHeight(self):
+        return self.root.getHeight(self.root, 1)
+
+    def getSize(self):
+        return self.root.getSize(self.root)
