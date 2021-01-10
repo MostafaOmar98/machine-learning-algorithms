@@ -21,7 +21,7 @@ def preprocess(features: np.ndarray):
         unique, count = np.unique(column, return_counts=True)
         ans = dict(zip(unique, count))
         winner = 'y' if ans['y'] > ans['n'] else 'n'
-        for i in range(column.shape[0]):
-            if column[i] == '?':
-                column[i] = winner
+        for index in range(column.shape[0]):
+            if column[index] == '?':
+                column[index] = winner
 
