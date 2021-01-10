@@ -35,7 +35,7 @@ class DecisionTree:
         taken.append(mxindx)
         for (ds) in self.filterOnFeature(wholeData=dataset, feature=mxindx):
             if ds.shape[0] > 0:
-                currentNode.addToChildren(Node(featureName=ds[:, mxindx][0]))
+                currentNode.addToChildren(Node(featureValue=ds[:, mxindx][0]))
                 self.train(currentNode.children[-1], ds, taken=taken)
 
     def runPre(self):
