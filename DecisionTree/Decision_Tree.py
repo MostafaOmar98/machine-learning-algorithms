@@ -27,6 +27,8 @@ class DecisionTree:
         mxindx = -1
         for featureIndx in range(0, dataset.shape[1] - 1):
             if not featureIndx in taken:
+                if mxindx == -1:
+                    mxindx = featureIndx
                 gain = ent
                 for splitted in self.filterOnFeature(dataset, featureIndx):
                     gain = gain - ((1.0 * splitted.shape[0] / dataset.shape[0]) * self.entropy(splitted))
