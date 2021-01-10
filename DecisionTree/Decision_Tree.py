@@ -8,9 +8,7 @@ from .Node import Node
 
 
 class DecisionTree:
-    root: Node
-    dataset: DataSet
-    preProcess: Callable
+
 
     def __init__(self, dataset: DataSet, preprocess: Callable):
         self.dataset = dataset
@@ -26,13 +24,13 @@ class DecisionTree:
             currentNode.result = dataset[:, -1][0]  # we make the result the
             return
         mx = 0
-        mxindx = 0
+        mxindx = -1
         for featureIndx in range(0, dataset.shape[1] - 1):
             if not featureIndx in taken:
                 gain = ent
                 for splitted in self.filterOnFeature(dataset, featureIndx):
                     gain = gain - ((1.0 * splitted.shape[0] / dataset.shape[0]) * self.entropy(splitted))
-                if mx < gain:
+                if gain != 0 and mx < gain:
                     mx = gain
                     mxindx = featureIndx
         currentNode.featureIndex = mxindx
@@ -60,12 +58,13 @@ class DecisionTree:
     #     it takes dataset and feature column index and filter to yes and no
     def filterOnFeature(self, wholeData: np.ndarray, feature: int):
         uniqueValues = np.unique(wholeData[:, feature])
+        if len(uniqueValues) == 1:
+            return [wholeData]
         return [wholeData[wholeData[:, feature] != value] for value in uniqueValues]
 
     def countVotes(self, wholeData: np.ndarray):
         unique, counts = np.unique(wholeData[:, -1], return_counts=True)  # get votes from last column
         return dict(zip(unique, counts))
-
 
     # it take Dataset and test it
     def testDataSet(self, testDataSet: DataSet):
