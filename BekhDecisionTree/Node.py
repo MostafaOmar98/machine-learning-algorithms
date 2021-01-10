@@ -7,7 +7,7 @@ class Node:
         self.featureIndex = None
 
     def __init__(self, featureName):
-        self.featureName = featureName
+        self.featureValue = featureName
         self.result = None
         self.children = []
         self.featureIndex = None

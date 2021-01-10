@@ -84,6 +84,6 @@ class DecisionTree:
         if node.result is None:
             featureIndx = node.featureIndex
             for child in node.children:
-                if child.featureName == example[featureIndx]:
+                if child.featureValue == example[featureIndx]:
                     return self.test(example, child)
         return node.result
