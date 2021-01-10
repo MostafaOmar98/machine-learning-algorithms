@@ -4,16 +4,13 @@ from typing import List
 
 
 class Node:
-    featureIndex: int
-    featureName: str
-    children: List[Node]
-    result = None
-
     def __int__(self, *argv):
         self.setChildren(argv)
+        self.result = None
 
     def __init__(self, featureName):
         self.featureName = featureName
+        self.result = None
         self.children = []
 
     def setChildren(self, *args):
