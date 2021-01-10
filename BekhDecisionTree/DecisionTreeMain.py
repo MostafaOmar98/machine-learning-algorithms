@@ -1,7 +1,6 @@
 import votes_conf as conf
 from Data_Wrapper import Data
-from DecisionTree import Decision_Tree
-
+import Decision_Tree
 if __name__ == "__main__":
 
     # we run 5 times with 0.25 training size random from dataset
