@@ -1,11 +1,7 @@
-import sys
 from typing import Callable
-
 import numpy as np
-
 from DataSet import DataSet
-from .Node import Node
-
+from Node import Node
 
 class DecisionTree:
 
@@ -62,7 +58,7 @@ class DecisionTree:
         uniqueValues = np.unique(wholeData[:, feature])
         if len(uniqueValues) == 1:
             return [wholeData]
-        return [wholeData[wholeData[:, feature] != value] for value in uniqueValues]
+        return [wholeData[wholeData[:, feature] == value] for value in uniqueValues]
 
     def countVotes(self, wholeData: np.ndarray):
         unique, counts = np.unique(wholeData[:, -1], return_counts=True)  # get votes from last column
