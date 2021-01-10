@@ -35,12 +35,23 @@ class DecisionTree:
                 if mx < gain:
                     mx = gain
                     mxindx = featureIndx
+        if mxindx == -1:
+            votes = self.countVotes(dataset)
+            mx =0
+            result =None
+            for vote in votes:
+                if votes[vote]>mx:
+                    mx = votes[vote]
+                    result = vote
+            currentNode.result = result
+            return
+
         currentNode.featureIndex = mxindx
         taken.append(mxindx)
         for (ds) in self.filterOnFeature(wholeData=dataset, feature=mxindx):
-            if ds.shape[0] > 0:
+            if ds.shape[0] > 0:# todo check removal
                 currentNode.addToChildren(Node(featureName=ds[:, mxindx][0]))
-                self.train(currentNode.children[-1], ds, taken=taken)
+                self.train(currentNode.children[-1], ds, taken=taken.copy())
 
     def runPre(self):
         self.preProcess(self.dataset.features)
@@ -60,9 +71,7 @@ class DecisionTree:
     #     it takes dataset and feature column index and filter to yes and no
     def filterOnFeature(self, wholeData: np.ndarray, feature: int):
         uniqueValues = np.unique(wholeData[:, feature])
-        if len(uniqueValues) == 1:
-            return [wholeData]
-        return [wholeData[wholeData[:, feature] != value] for value in uniqueValues]
+        return [wholeData[wholeData[:, feature] == value] for value in uniqueValues]
 
     def countVotes(self, wholeData: np.ndarray):
         unique, counts = np.unique(wholeData[:, -1], return_counts=True)  # get votes from last column
